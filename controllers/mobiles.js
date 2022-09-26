@@ -44,23 +44,45 @@ const signUp = async (req, res) => {
 
 
 
+
 const logIn = async (req, res) => {
+
+    // const sqlite3 = require('sqlite3').verbose();
+
+    // let dbdb = new sqlite3.Database('./data.db', sqlite3.OPEN_READWRITE, (err) => {
+    //     if (err) {
+    //         console.error(err.message);
+    //     }
+    //     else{
+    //         console.log('Connected to the data database.');
+    //     }
+        
+    // });
+
     try {
         const db = await dbPromise;
         const username = req.body.username
         const password = req.body.password
 
-        res.status(201).json('You are a registered user.')
+        console.log(username)
+        console.log(password);
+
+        let sql = db.all('SELECT username FROM User WHERE username == ? AND password == ?', username, password)
+        const user = (await sql).toString()
+        console.log(user)
+        if (user.length > 0) {
+            res.status(201).json('You are a registered user.')
+        }
+
+        else {
+            res.json('Wrong Credentials')
+        }
 
         // var sql = await db.run('SELECT * FROM User WHERE username = ? AND password = ?', username, password)
         // console.log(sql)
 
-        // if (sql.length > 0) {
-        //     res.status(201).json('You are a registered user.')
-        // }
-        // else {
-        //     console.log('sorry')
-        // }
+        
+        
 
         // if (username && password) {
         //     connection.query('SELECT * FROM User WHERE username = ? AND password = ?', [username, password], 

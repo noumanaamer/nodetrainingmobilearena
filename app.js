@@ -19,6 +19,7 @@ const mobiles = require('./routes/mobiles');
 const dbPromise = require('./sqlite3/sqlite')
 
 
+
 // middleware
 app.use(express.json())
 
