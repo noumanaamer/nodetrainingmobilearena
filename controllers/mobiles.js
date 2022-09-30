@@ -28,6 +28,13 @@ const signUp = async (req, res) => {
         const phone = req.body.phone
         const password = req.body.password
 
+        const {BadRequestError} = require('../errors')
+
+        if (!username || !password) {
+            throw new BadRequestError('Please provide username and password.')
+            // res.status(400).json('Please provide username and password.')
+        }
+    
         // await db.run(
         //     'INSERT INTO User(username) VALUES (?);', username)
 
@@ -37,7 +44,8 @@ const signUp = async (req, res) => {
         res.status(201).json('Ok Done')
     } catch (error) {
         res.status(500).json({msg: error})
-        console.log(error)  
+        console.log(error);
+
     }
 }
 
